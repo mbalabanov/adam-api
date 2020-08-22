@@ -22,7 +22,6 @@ function loadData() {
     fs.readFile('data/featured.json', 'utf8', function(err, contents) {
         var tempData = JSON.parse(contents);
         featured = tempData;
-
     });
 
     fs.readFile('data/newsdata.json', 'utf8', function(err, contents) {
@@ -82,16 +81,47 @@ function deleteItem(request, response) {
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
     var deleteId = request.params.id;
-    var checkId = parseInt(deleteId);
-    var maxId = dataType.content.length;
-    if (checkId >= maxId) {
-        response.send(deleteId + ' not a valid ID.');
+
+    var singleDeleteItem = dataType.content.find(dataType => dataType.id === deleteId);
+    var delIndex = dataType.content.findIndex(dataType => dataType.id === deleteId);
+
+    if (singleDeleteItem === undefined) {
+        response.send(deleteId + ' is not a valid ID.');
     } else {
-        dataType.content[deleteId].published = "false";
-        response.send(deleteId + ' marked as deleted.');
-    };
+        var correctedData = [
+            ...dataType.content.slice(0, delIndex),
+            ...dataType.content.slice(delIndex + 1)
+        ]
+        allData.artifacts.content = correctedData;
+        response.send(deleteId + ' is deleted successfully.');
+        fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
+            response.status(200).end('OK');
+        });
+    }
 };
 
+// Muss geändert werden
+function editFeatured(request, response) {
+    var editId = request.params.id;
+    var checkId = parseInt(editId);
+
+    if (checkId < exhibitions.length){
+        var changedFeatured = {
+            id: editId,
+            image: request.body.image,
+            title: request.body.title,
+            description: request.body.description,
+            link: request.body.link,
+        };
+        featured[editId] = changedFeatured;
+        // Die Daten sollte hier gespeichert werden.
+        response.send('Featured ' + editId + ' item successfully changed.');
+    } else {
+        response.send('Not a valid ID for a featured item.');
+    }
+};
+
+// Muss geändert werden
 function editItem(request, response) {
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
@@ -152,26 +182,7 @@ function editItem(request, response) {
     }
 };
 
-function editFeatured(request, response) {
-    var editId = request.params.id;
-    var checkId = parseInt(editId);
-
-    if (checkId < exhibitions.length){
-        var changedFeatured = {
-            id: editId,
-            image: request.body.image,
-            title: request.body.title,
-            description: request.body.description,
-            link: request.body.link,
-        };
-        featured[editId] = changedFeatured;
-        // Die Daten sollte hier gespeichert werden.
-        response.send('Featured ' + editId + ' item successfully changed.');
-    } else {
-        response.send('Not a valid ID for a featured item.');
-    }
-};
-
+// Muss geändert werden
 function editNews(request, response) {
     var editId = request.params.id;
     var checkId = parseInt(editId);
