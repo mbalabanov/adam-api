@@ -78,7 +78,6 @@ function getNewsItem(request, response) {
 };
 
 function deleteItem(request, response) {
-    console.log('Löschen')
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
     var deleteId = request.params.id;
@@ -93,7 +92,7 @@ function deleteItem(request, response) {
             ...dataType.content.slice(0, delIndex),
             ...dataType.content.slice(delIndex + 1)
         ]
-        allData.artifacts.content = correctedData;
+        allData.dataType.content = correctedData;
         response.send(deleteId + ' is deleted successfully.');
         fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
             response.status(200).end('OK');
