@@ -61,7 +61,7 @@ function getItem(request, response) {
         response.setHeader('Content-Type', 'application/json');
         response.send(singleItem);        
     } else {
-        response.send(itemId + ' is not a valid ID for ' + requestURL + '.');
+        response.send(itemId + ' is not a valid ID for ' + requestURL[1] + '.');
     }
 };
 
@@ -78,6 +78,7 @@ function getNewsItem(request, response) {
 };
 
 function deleteItem(request, response) {
+    console.log('Löschen')
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
     var deleteId = request.params.id;
