@@ -80,7 +80,6 @@ function getNewsItem(request, response) {
 function deleteItem(request, response) {
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
-    console.log(dataType);
     var deleteId = request.params.id;
 
     var singleDeleteItem = dataType.content.find(dataType => dataType.id === deleteId);
@@ -93,15 +92,17 @@ function deleteItem(request, response) {
             ...dataType.content.slice(0, delIndex),
             ...dataType.content.slice(delIndex + 1)
         ];
-        if (dataType == 'artifacts') {
+
+        if (requestURL[1] == 'artifacts') {
             allData.artifacts.content = correctedData;
         };
-        if (dataType == 'persons') {
+        if (requestURL[1] == 'persons') {
             allData.persons.content = correctedData;
         };
-        if (dataType == 'events') {
+        if (requestURL[1] == 'events') {
             allData.events.content = correctedData;
         };
+
         fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
             response.status(200).end('OK');
         });

@@ -1,7 +1,7 @@
 {
     "artifacts": {
         "name": "Artifacts",
-        "coverimage": "assets/img/artifacts/artifacts1.jpg",
+        "coverimage": "assets/img/artifacts-cover.jpg",
         "content": [
             {
                 "id": "a0",
@@ -509,7 +509,7 @@
     },
     "persons": {
         "name": "Persons",
-        "coverimage": "assets/img/portraits/portrait01.jpg",
+        "coverimage": "assets/img/persons-cover.jpg",
         "content": [
             {
                 "id": "p0",
@@ -982,7 +982,7 @@
     },
     "events": {
         "name": "Events",
-        "coverimage": "assets/img/exhibitions/exhibitions1.jpg",
+        "coverimage": "assets/img/events-cover.jpg",
         "content": [
             {
                 "id": "e0",
