@@ -65,6 +65,6 @@ app.post('/news/:id', function(request, response) {
   editNews(request, response);
 });
 
-app.put('/featured/:id', function(request, response) {
+app.put(['/featured/', '/featured'], function(request, response) {
   editFeatured(request, response);
 });

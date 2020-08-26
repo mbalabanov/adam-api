@@ -110,25 +110,44 @@ function deleteItem(request, response) {
     }
 };
 
-// Muss geändert werden
 function editFeatured(request, response) {
-    var editId = request.params.id;
-    var checkId = parseInt(editId);
+    console.log('Kommt an!');
+    let tempObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
 
-    if (checkId < exhibitions.length){
-        var changedFeatured = {
-            id: editId,
-            image: request.body.image,
-            title: request.body.title,
-            description: request.body.description,
-            link: request.body.link,
-        };
-        featured[editId] = changedFeatured;
-        // Die Daten sollte hier gespeichert werden.
-        response.send('Featured ' + editId + ' item successfully changed.');
-    } else {
-        response.send('Not a valid ID for a featured item.');
-    }
+    let editedFeatures;
+
+    editedFeatures = JSON.parse(tempObj[0]);
+
+    console.log(editedFeatures[0].image);
+
+    featured.content[0].id=editedFeatures[0].id;
+    featured.content[0].image=editedFeatures[0].image;
+    featured.content[0].title=editedFeatures[0].title;
+    featured.content[0].description=editedFeatures[0].description;
+    featured.content[0].link=editedFeatures[0].link;
+
+    featured.content[1].id=editedFeatures[1].id;
+    featured.content[1].image=editedFeatures[1].image;
+    featured.content[1].title=editedFeatures[1].title;
+    featured.content[1].description=editedFeatures[1].description;
+    featured.content[1].link=editedFeatures[1].link;
+
+    featured.content[2].id=editedFeatures[2].id;
+    featured.content[2].image=editedFeatures[2].image;
+    featured.content[2].title=editedFeatures[2].title;
+    featured.content[2].description=editedFeatures[2].description;
+    featured.content[2].link=editedFeatures[2].link;
+
+    featured.content[3].id=editedFeatures[3].id;
+    featured.content[3].image=editedFeatures[3].image;
+    featured.content[3].title=editedFeatures[3].title;
+    featured.content[3].description=editedFeatures[3].description;
+    featured.content[3].link=editedFeatures[3].link;
+
+    fs.writeFile( 'data/featured.json', JSON.stringify( featured ), function(err) {
+        response.status(200).end('OK');
+    });
+
 };
 
 // Muss geändert werden
