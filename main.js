@@ -57,14 +57,14 @@ app.post(['/artifacts/:id', '/persons/:id', '/events/:id'], function(request, re
   editItem(request, response);
 });
 
-app.put('/news/:id', function(request, response) {
-  editNews(request, response);
-});
-
-app.post('/news/:id', function(request, response) {
+app.put(['/news/', '/news'], function(request, response) {
   editNews(request, response);
 });
 
 app.put(['/featured/', '/featured'], function(request, response) {
   editFeatured(request, response);
+});
+
+app.put(['/compliance/', '/compliance'], function(request, response) {
+  editCompliance(request, response);
 });

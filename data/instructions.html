@@ -55,9 +55,6 @@
                 <li><strong>/artifacts/id</strong> - Delete a specific item from the list of artifacts.</li>
                 <li><strong>/persons/id</strong> - Delete a specific item from the list of persons.</li>
                 <li><strong>/events/id</strong> - Delete a specific item from the list of events.</li>
-                <li><strong>/news/id</strong> - Delete a specific news item.</li>
-                <li><strong>/featured/id</strong> - Delete a specific featured item.</li>
-                <li><strong>/compliance/id</strong> - Delete a specific compliance page.</li>
             </ul>
 
             <h2>PUT (WITH an ID):</h2>
@@ -120,7 +117,7 @@
                     </ul>
                     <br><br>
                 </li>
-                <li><strong>/news/id</strong> - Edit a specific news item.
+                <li><strong>/news</strong> - The contents of all news items must be changed at once. There are three news items, each with the structure below.
                     <ul>
                         <li><strong>Structure of news articles</strong>
                             <ul>
@@ -135,7 +132,7 @@
                     </ul>
                     <br><br>
                 </li>
-                <li><strong>/featured/id</strong> - Edit a specific item from the list of featured on the frontpage.
+                <li><strong>/featured/id</strong> - The contents of all featured items must be changed at once. There are four featured items, each with the structure below.
                     <ul>
                         <li><strong>Structure of featured items</strong>
                             <ul>
@@ -149,7 +146,7 @@
                     </ul>
                     <br><br>
                 </li>
-                <li><strong>/compliance/id</strong> - Edit a specific compliance page.
+                <li><strong>/compliance/id</strong> - The contents of all compliance pages must be changed at once. There are five compliance pages, each with the structure below.
                     <ul>
                         <li><strong>Structure of compliance pages</strong>
                             <ul>
@@ -171,11 +168,7 @@
                 <li><strong>/artifacts/new</strong> - Create a new item in the list of artifacts.</li>
                 <li><strong>/persons/new</strong> - Create a new item in the list of persons.</li>
                 <li><strong>/events/new</strong> - Create a new item in the list of events.</li>
-                <li><strong>/news/new</strong> - Create a new news item.</li>
-                <li><strong>/compliance/new</strong> - Create a new news item.</li>
             </ul>
-            <p><em>Please note that new featured items should not be created. The total number should be kept at four featured items.</em></p>
-            <p><em>Also kindly note that new compliance pages should be created only when necessary. Then the navigation needs to be ammended to include them.</em></p>
         </div>
     </body>
 </html>

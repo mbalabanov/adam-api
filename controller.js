@@ -4,6 +4,7 @@ const fs = require( 'fs' );
 let allData = {};
 let featured = [];
 let news = [];
+let compliance;
 let instructiontext = ``;
 
 function instructions(request, response) {
@@ -110,46 +111,6 @@ function deleteItem(request, response) {
     }
 };
 
-function editFeatured(request, response) {
-    console.log('Kommt an!');
-    let tempObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
-
-    let editedFeatures;
-
-    editedFeatures = JSON.parse(tempObj[0]);
-
-    console.log(editedFeatures[0].image);
-
-    featured.content[0].id=editedFeatures[0].id;
-    featured.content[0].image=editedFeatures[0].image;
-    featured.content[0].title=editedFeatures[0].title;
-    featured.content[0].description=editedFeatures[0].description;
-    featured.content[0].link=editedFeatures[0].link;
-
-    featured.content[1].id=editedFeatures[1].id;
-    featured.content[1].image=editedFeatures[1].image;
-    featured.content[1].title=editedFeatures[1].title;
-    featured.content[1].description=editedFeatures[1].description;
-    featured.content[1].link=editedFeatures[1].link;
-
-    featured.content[2].id=editedFeatures[2].id;
-    featured.content[2].image=editedFeatures[2].image;
-    featured.content[2].title=editedFeatures[2].title;
-    featured.content[2].description=editedFeatures[2].description;
-    featured.content[2].link=editedFeatures[2].link;
-
-    featured.content[3].id=editedFeatures[3].id;
-    featured.content[3].image=editedFeatures[3].image;
-    featured.content[3].title=editedFeatures[3].title;
-    featured.content[3].description=editedFeatures[3].description;
-    featured.content[3].link=editedFeatures[3].link;
-
-    fs.writeFile( 'data/featured.json', JSON.stringify( featured ), function(err) {
-        response.status(200).end('OK');
-    });
-
-};
-
 // Muss geändert werden
 function editItem(request, response) {
     var requestURL = request.url.split('/');
@@ -211,43 +172,121 @@ function editItem(request, response) {
     }
 };
 
-// Muss geändert werden
-function editNews(request, response) {
-    var editId = request.params.id;
-    var checkId = parseInt(editId);
-    var maxId = news.length;
+function editFeatured(request, response) {
+    let tempFeaturesObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+    let editedFeatures;
+    editedFeatures = JSON.parse(tempFeaturesObj[0]);
 
-    if(editId == 'new') {
-        editId = maxId;
-        var newNewsitem = {
-            id: editId,
-            title: request.body.title,
-            urlAddress: request.body.urlAddress,
-            image: request.body.image,
-            largeimage: request.body.largeimage,
-            shortdescription: request.body.description,
-            articletext: request.body.articletext,
-        };
-        news.push(newNewsitem);
-        // Die Daten sollte hier gespeichert werden.
-        response.send('News item ' + editId + ' successfully created.');
-    } else if (checkId < news.length){
-        var changedNewsitem = {
-            id: editId,
-            title: request.body.title,
-            urlAddress: request.bsody.urlAddress,
-            image: request.body.image,
-            largeimage: request.body.largeimage,
-            shortdescription: request.body.description,
-            articletext: request.body.articletext,
-        };
-        news[editId] = changedNewsitem;
-        // Die Daten sollte hier gespeichert werden.
-        response.send('News item ' + editId + ' successfully changed.');
-    } else {
-        response.send('Not a valid ID for a news item.');
-    }
+    featured.content[0].id=editedFeatures[0].id;
+    featured.content[0].image=editedFeatures[0].image;
+    featured.content[0].title=editedFeatures[0].title;
+    featured.content[0].description=editedFeatures[0].description;
+    featured.content[0].link=editedFeatures[0].link;
+
+    featured.content[1].id=editedFeatures[1].id;
+    featured.content[1].image=editedFeatures[1].image;
+    featured.content[1].title=editedFeatures[1].title;
+    featured.content[1].description=editedFeatures[1].description;
+    featured.content[1].link=editedFeatures[1].link;
+
+    featured.content[2].id=editedFeatures[2].id;
+    featured.content[2].image=editedFeatures[2].image;
+    featured.content[2].title=editedFeatures[2].title;
+    featured.content[2].description=editedFeatures[2].description;
+    featured.content[2].link=editedFeatures[2].link;
+
+    featured.content[3].id=editedFeatures[3].id;
+    featured.content[3].image=editedFeatures[3].image;
+    featured.content[3].title=editedFeatures[3].title;
+    featured.content[3].description=editedFeatures[3].description;
+    featured.content[3].link=editedFeatures[3].link;
+
+    fs.writeFile( 'data/featured.json', JSON.stringify( featured ), function(err) {
+        response.status(200).end('OK');
+    });
+
 };
+
+function editNews(request, response) {
+
+    let tempNewsObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+    let editedNews;
+    editedNews = JSON.parse(tempNewsObj[0]);
+
+    news.content[0].id=editedNews[0].id;
+    news.content[0].title=editedNews[0].title;
+    news.content[0].image=editedNews[0].image;
+    news.content[0].largeimage=editedNews[0].largeimage;
+    news.content[0].shortdescription=editedNews[0].shortdescription;
+    news.content[0].articletext=editedNews[0].articletext;
+
+    news.content[1].id=editedNews[1].id;
+    news.content[1].title=editedNews[1].title;
+    news.content[1].image=editedNews[1].image;
+    news.content[1].largeimage=editedNews[1].largeimage;
+    news.content[1].shortdescription=editedNews[1].shortdescription;
+    news.content[1].articletext=editedNews[1].articletext;
+
+    news.content[2].id=editedNews[2].id;
+    news.content[2].title=editedNews[2].title;
+    news.content[2].image=editedNews[2].image;
+    news.content[2].largeimage=editedNews[2].largeimage;
+    news.content[2].shortdescription=editedNews[2].shortdescription;
+    news.content[2].articletext=editedNews[2].articletext;
+
+    fs.writeFile( 'data/newsdata.json', JSON.stringify( news ), function(err) {
+        response.status(200).end('OK');
+    });
+
+};
+
+function editCompliance(request, response) {
+    let tempObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+    let editedCompliancePages;
+    editedCompliancePages = JSON.parse(tempObj[0]);
+
+    compliance.content[0].id=editedCompliancePages[0].id
+    compliance.content[0].category=editedCompliancePages[0].category
+    compliance.content[0].title=editedCompliancePages[0].title
+    compliance.content[0].firstimage=editedCompliancePages[0].firstimage
+    compliance.content[0].secondimage=editedCompliancePages[0].secondimage
+    compliance.content[0].articletext=editedCompliancePages[0].articletext
+
+    compliance.content[1].id=editedCompliancePages[1].id
+    compliance.content[1].category=editedCompliancePages[1].category
+    compliance.content[1].title=editedCompliancePages[1].title
+    compliance.content[1].firstimage=editedCompliancePages[1].firstimage
+    compliance.content[1].secondimage=editedCompliancePages[1].secondimage
+    compliance.content[1].articletext=editedCompliancePages[1].articletext
+
+    compliance.content[2].id=editedCompliancePages[2].id
+    compliance.content[2].category=editedCompliancePages[2].category
+    compliance.content[2].title=editedCompliancePages[2].title
+    compliance.content[2].firstimage=editedCompliancePages[2].firstimage
+    compliance.content[2].secondimage=editedCompliancePages[2].secondimage
+    compliance.content[2].articletext=editedCompliancePages[2].articletext
+
+    compliance.content[3].id=editedCompliancePages[3].id
+    compliance.content[3].category=editedCompliancePages[3].category
+    compliance.content[3].title=editedCompliancePages[3].title
+    compliance.content[3].firstimage=editedCompliancePages[3].firstimage
+    compliance.content[3].secondimage=editedCompliancePages[3].secondimage
+    compliance.content[3].articletext=editedCompliancePages[3].articletext
+
+    compliance.content[4].id=editedCompliancePages[4].id
+    compliance.content[4].category=editedCompliancePages[4].category
+    compliance.content[4].title=editedCompliancePages[4].title
+    compliance.content[4].firstimage=editedCompliancePages[4].firstimage
+    compliance.content[4].secondimage=editedCompliancePages[4].secondimage
+    compliance.content[4].articletext=editedCompliancePages[4].articletext
+
+    fs.writeFile( 'data/compliance.json', JSON.stringify( compliance ), function(err) {
+        response.status(200).end('OK');
+    });
+
+};
+
+
 
 module.exports = {
     loadData,
@@ -259,5 +298,6 @@ module.exports = {
     editItem,
     editFeatured,
     editNews,
-    getNewsItem
+    getNewsItem,
+    editCompliance
 };
