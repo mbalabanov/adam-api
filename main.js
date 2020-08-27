@@ -1,13 +1,14 @@
 const express = require( 'express' );
 const bp = require( 'body-parser' );
 const morgan = require('morgan');
-const { loadData, instructions, getAll, getItems, getItem, deleteItem, editItem, editFeatured, editNews, getNewsItem } = require('./controller');
+const { loadData, instructions, getAll, getItems, getItem, deleteItem, editItem, editFeatured, editNews, getNewsItem, editCompliance } = require('./controller');
 const app = express();
 var cors = require('cors');
 const port = process.env.PORT || 5003;
 
 app.use(cors());
 
+app.use( bp.json());
 app.use( bp.urlencoded({ extended:false}) );
 
 function error(status, msg) {
@@ -65,6 +66,6 @@ app.put(['/featured/', '/featured'], function(request, response) {
   editFeatured(request, response);
 });
 
-app.put(['/compliance/', '/compliance'], function(request, response) {
+app.post(['/compliance/', '/compliance'], function(request, response) {
   editCompliance(request, response);
 });

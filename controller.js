@@ -241,52 +241,51 @@ function editNews(request, response) {
 };
 
 function editCompliance(request, response) {
-    let tempObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+
+    let tempComplianceObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
     let editedCompliancePages;
-    editedCompliancePages = JSON.parse(tempObj[0]);
+    editedCompliancePages = JSON.parse(tempComplianceObj[0]);
 
-    compliance.content[0].id=editedCompliancePages[0].id
-    compliance.content[0].category=editedCompliancePages[0].category
-    compliance.content[0].title=editedCompliancePages[0].title
-    compliance.content[0].firstimage=editedCompliancePages[0].firstimage
-    compliance.content[0].secondimage=editedCompliancePages[0].secondimage
-    compliance.content[0].articletext=editedCompliancePages[0].articletext
+    compliance.content[0].id=editedCompliancePages.content[0].id;
+    compliance.content[0].category=editedCompliancePages.content[0].category;
+    compliance.content[0].title=editedCompliancePages.content[0].title;
+    compliance.content[0].firstimage=editedCompliancePages.content[0].firstimage;
+    compliance.content[0].secondimage=editedCompliancePages.content[0].secondimage;
+    compliance.content[0].articletext=editedCompliancePages.content[0].articletext;
 
-    compliance.content[1].id=editedCompliancePages[1].id
-    compliance.content[1].category=editedCompliancePages[1].category
-    compliance.content[1].title=editedCompliancePages[1].title
-    compliance.content[1].firstimage=editedCompliancePages[1].firstimage
-    compliance.content[1].secondimage=editedCompliancePages[1].secondimage
-    compliance.content[1].articletext=editedCompliancePages[1].articletext
+    compliance.content[1].id=editedCompliancePages.content[1].category;
+    compliance.content[1].category=editedCompliancePages.content[1].category;
+    compliance.content[1].title=editedCompliancePages.content[1].title;
+    compliance.content[1].firstimage=editedCompliancePages.content[1].firstimage;
+    compliance.content[1].secondimage=editedCompliancePages.content[1].secondimage;
+    compliance.content[1].articletext=editedCompliancePages.content[1].articletext;
 
-    compliance.content[2].id=editedCompliancePages[2].id
-    compliance.content[2].category=editedCompliancePages[2].category
-    compliance.content[2].title=editedCompliancePages[2].title
-    compliance.content[2].firstimage=editedCompliancePages[2].firstimage
-    compliance.content[2].secondimage=editedCompliancePages[2].secondimage
-    compliance.content[2].articletext=editedCompliancePages[2].articletext
+    compliance.content[2].id=editedCompliancePages.content[2].category;
+    compliance.content[2].category=editedCompliancePages.content[2].category;
+    compliance.content[2].title=editedCompliancePages.content[2].title;
+    compliance.content[2].firstimage=editedCompliancePages.content[2].firstimage;
+    compliance.content[2].secondimage=editedCompliancePages.content[2].secondimage;
+    compliance.content[2].articletext=editedCompliancePages.content[2].articletext;
 
-    compliance.content[3].id=editedCompliancePages[3].id
-    compliance.content[3].category=editedCompliancePages[3].category
-    compliance.content[3].title=editedCompliancePages[3].title
-    compliance.content[3].firstimage=editedCompliancePages[3].firstimage
-    compliance.content[3].secondimage=editedCompliancePages[3].secondimage
-    compliance.content[3].articletext=editedCompliancePages[3].articletext
+    compliance.content[3].id=editedCompliancePages.content[3].category;
+    compliance.content[3].category=editedCompliancePages.content[3].category;
+    compliance.content[3].title=editedCompliancePages.content[3].title;
+    compliance.content[3].firstimage=editedCompliancePages.content[3].firstimage;
+    compliance.content[3].secondimage=editedCompliancePages.content[3].secondimage;
+    compliance.content[3].articletext=editedCompliancePages.content[3].articletext;
 
-    compliance.content[4].id=editedCompliancePages[4].id
-    compliance.content[4].category=editedCompliancePages[4].category
-    compliance.content[4].title=editedCompliancePages[4].title
-    compliance.content[4].firstimage=editedCompliancePages[4].firstimage
-    compliance.content[4].secondimage=editedCompliancePages[4].secondimage
-    compliance.content[4].articletext=editedCompliancePages[4].articletext
+    compliance.content[4].id=editedCompliancePages.content[4].category;
+    compliance.content[4].category=editedCompliancePages.content[4].category;
+    compliance.content[4].title=editedCompliancePages.content[4].title;
+    compliance.content[4].firstimage=editedCompliancePages.content[4].firstimage;
+    compliance.content[4].secondimage=editedCompliancePages.content[4].secondimage;
+    compliance.content[4].articletext=editedCompliancePages.content[4].articletext;
 
     fs.writeFile( 'data/compliance.json', JSON.stringify( compliance ), function(err) {
         response.status(200).end('OK');
     });
 
 };
-
-
 
 module.exports = {
     loadData,
