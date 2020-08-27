@@ -210,29 +210,31 @@ function editFeatured(request, response) {
 function editNews(request, response) {
 
     let tempNewsObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+    console.log(tempNewsObj);
+
     let editedNews;
     editedNews = JSON.parse(tempNewsObj[0]);
 
-    news.content[0].id=editedNews[0].id;
-    news.content[0].title=editedNews[0].title;
-    news.content[0].image=editedNews[0].image;
-    news.content[0].largeimage=editedNews[0].largeimage;
-    news.content[0].shortdescription=editedNews[0].shortdescription;
-    news.content[0].articletext=editedNews[0].articletext;
+    news.content[0].id=editedNews.content[0].id;
+    news.content[0].title=editedNews.content[0].title;
+    news.content[0].image=editedNews.content[0].image;
+    news.content[0].largeimage=editedNews.content[0].largeimage;
+    news.content[0].shortdescription=editedNews.content[0].shortdescription;
+    news.content[0].articletext=editedNews.content[0].articletext;
 
-    news.content[1].id=editedNews[1].id;
-    news.content[1].title=editedNews[1].title;
-    news.content[1].image=editedNews[1].image;
-    news.content[1].largeimage=editedNews[1].largeimage;
-    news.content[1].shortdescription=editedNews[1].shortdescription;
-    news.content[1].articletext=editedNews[1].articletext;
+    news.content[1].id=editedNews.content[1].id;
+    news.content[1].title=editedNews.content[1].title;
+    news.content[1].image=editedNews.content[1].image;
+    news.content[1].largeimage=editedNews.content[1].largeimage;
+    news.content[1].shortdescription=editedNews.content[1].shortdescription;
+    news.content[1].articletext=editedNews.content[1].articletext;
 
-    news.content[2].id=editedNews[2].id;
-    news.content[2].title=editedNews[2].title;
-    news.content[2].image=editedNews[2].image;
-    news.content[2].largeimage=editedNews[2].largeimage;
-    news.content[2].shortdescription=editedNews[2].shortdescription;
-    news.content[2].articletext=editedNews[2].articletext;
+    news.content[2].id=editedNews.content[2].id;
+    news.content[2].title=editedNews.content[2].title;
+    news.content[2].image=editedNews.content[2].image;
+    news.content[2].largeimage=editedNews.content[2].largeimage;
+    news.content[2].shortdescription=editedNews.content[2].shortdescription;
+    news.content[2].articletext=editedNews.content[2].articletext;
 
     fs.writeFile( 'data/newsdata.json', JSON.stringify( news ), function(err) {
         response.status(200).end('OK');
