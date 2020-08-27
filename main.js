@@ -66,6 +66,6 @@ app.put(['/featured/', '/featured'], function(request, response) {
   editFeatured(request, response);
 });
 
-app.post(['/compliance/', '/compliance'], function(request, response) {
+app.put(['/compliance/', '/compliance'], function(request, response) {
   editCompliance(request, response);
 });
