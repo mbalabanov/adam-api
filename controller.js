@@ -116,36 +116,20 @@ function editItem(request, response) {
     var requestURL = request.url.split('/');
     var dataType = eval(requestURL[1]);
     var editId = request.params.id;
-    var checkId = parseInt(editId);
-    var maxId = dataType.content.length;
-    var today = new Date();
 
     if(editId == 'new') {
-        editId = maxId;
 
-        var newItem = {
-            id: editId,
-            name: request.body.name,
-            shortDescription: request.body.shortDescription,
-            longDescription: request.body.longDescription,
-            date: request.body.firstAppearance,
-            tags: request.body.tags,
-            images: request.body.images,
-            videos: request.body.videos,
-            websiteURLs: request.body.websiteURLs,
-            assets: request.body.assets,
-            artifactIDs: request.body.artifactIDs,
-            personIDs: request.body.personIDs,
-            eventsIDs: request.body.eventIDs,
-            published: request.body.published,
-            createdOn: request.body.createdOn,
-            lastChangeOn: today
-        };
+        let tempNewArchiveObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
+        let newItem;
+        newItem = JSON.parse(tempNewArchiveObj[0]);
 
-        dataType.content.push(newItem);
-        // Die Daten sollte hier gespeichert werden.
-        response.send('Item ' + dataType.name + ' ' + editId + ' successfully created.');
-    } else if (checkId < maxId) {
+        dataType.content.unshift(newItem);
+        fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
+            response.status(200).end('OK');
+        });
+        response.send('Successfully created.');
+    } else if (editId == 'notnew') {
+        /*
         var changedItem = {
             id: editId,
             name: request.body.name,
@@ -165,8 +149,8 @@ function editItem(request, response) {
             lastChangeOn: today
         };
         dataType.content[editId] = changedItem;
-        // Die Daten sollte hier gespeichert werden.
-        response.send('Item ' + dataType.name + ' ' + editId + ' successfully changed.');
+        */
+        response.send('Successfully changed.');
     } else {
         response.send('Not a valid ' + dataType.name + '-ID.');
     }
@@ -210,8 +194,6 @@ function editFeatured(request, response) {
 function editNews(request, response) {
 
     let tempNewsObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
-    console.log(tempNewsObj);
-
     let editedNews;
     editedNews = JSON.parse(tempNewsObj[0]);
 
