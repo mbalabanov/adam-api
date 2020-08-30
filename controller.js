@@ -118,12 +118,10 @@ function editItem(request, response) {
     var editId = request.params.id;
 
     if(editId == 'new') {
-
-        let tempNewArchiveObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
         let newItem;
-        newItem = JSON.parse(tempNewArchiveObj[0]);
-
+        newItem = request.body;
         dataType.content.unshift(newItem);
+
         fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
             response.status(200).end('OK');
         });
@@ -157,9 +155,8 @@ function editItem(request, response) {
 };
 
 function editFeatured(request, response) {
-    let tempFeaturesObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
-    let editedFeatures;
-    editedFeatures = JSON.parse(tempFeaturesObj[0]);
+
+    editedFeatures = request.body;
 
     featured.content[0].id=editedFeatures[0].id;
     featured.content[0].image=editedFeatures[0].image;
@@ -193,9 +190,7 @@ function editFeatured(request, response) {
 
 function editNews(request, response) {
 
-    let tempNewsObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
-    let editedNews;
-    editedNews = JSON.parse(tempNewsObj[0]);
+    let editedNews = request.body;
 
     news.content[0].id=editedNews.content[0].id;
     news.content[0].title=editedNews.content[0].title;
