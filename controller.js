@@ -155,8 +155,7 @@ function editItem(request, response) {
 };
 
 function editFeatured(request, response) {
-
-    editedFeatures = request.body;
+    let editedFeatures = request.body;
 
     featured.content[0].id=editedFeatures[0].id;
     featured.content[0].image=editedFeatures[0].image;
@@ -189,7 +188,6 @@ function editFeatured(request, response) {
 };
 
 function editNews(request, response) {
-
     let editedNews = request.body;
 
     news.content[0].id=editedNews.content[0].id;
@@ -220,40 +218,34 @@ function editNews(request, response) {
 };
 
 function editCompliance(request, response) {
-
-    let tempComplianceObj = Object.keys(JSON.parse(JSON.stringify(request.body)));
-    let editedCompliancePages;
-    editedCompliancePages = JSON.parse(tempComplianceObj[0]);
+    let editedCompliancePages = request.body;
+    console.log(editedCompliancePages);
 
     compliance.content[0].id=editedCompliancePages.content[0].id;
-    compliance.content[0].category=editedCompliancePages.content[0].category;
     compliance.content[0].title=editedCompliancePages.content[0].title;
     compliance.content[0].firstimage=editedCompliancePages.content[0].firstimage;
     compliance.content[0].secondimage=editedCompliancePages.content[0].secondimage;
     compliance.content[0].articletext=editedCompliancePages.content[0].articletext;
 
-    compliance.content[1].id=editedCompliancePages.content[1].category;
-    compliance.content[1].category=editedCompliancePages.content[1].category;
+    compliance.content[1].id=editedCompliancePages.content[1].id;
     compliance.content[1].title=editedCompliancePages.content[1].title;
     compliance.content[1].firstimage=editedCompliancePages.content[1].firstimage;
     compliance.content[1].secondimage=editedCompliancePages.content[1].secondimage;
     compliance.content[1].articletext=editedCompliancePages.content[1].articletext;
 
-    compliance.content[2].id=editedCompliancePages.content[2].category;
-    compliance.content[2].category=editedCompliancePages.content[2].category;
+    compliance.content[2].id=editedCompliancePages.content[2].id;
     compliance.content[2].title=editedCompliancePages.content[2].title;
     compliance.content[2].firstimage=editedCompliancePages.content[2].firstimage;
     compliance.content[2].secondimage=editedCompliancePages.content[2].secondimage;
     compliance.content[2].articletext=editedCompliancePages.content[2].articletext;
 
-    compliance.content[3].id=editedCompliancePages.content[3].category;
-    compliance.content[3].category=editedCompliancePages.content[3].category;
+    compliance.content[3].id=editedCompliancePages.content[3].id;
     compliance.content[3].title=editedCompliancePages.content[3].title;
     compliance.content[3].firstimage=editedCompliancePages.content[3].firstimage;
     compliance.content[3].secondimage=editedCompliancePages.content[3].secondimage;
     compliance.content[3].articletext=editedCompliancePages.content[3].articletext;
 
-    compliance.content[4].id=editedCompliancePages.content[4].category;
+    compliance.content[4].id=editedCompliancePages.content[4].id;
     compliance.content[4].category=editedCompliancePages.content[4].category;
     compliance.content[4].title=editedCompliancePages.content[4].title;
     compliance.content[4].firstimage=editedCompliancePages.content[4].firstimage;
