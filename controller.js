@@ -219,7 +219,6 @@ function editNews(request, response) {
 
 function editCompliance(request, response) {
     let editedCompliancePages = request.body;
-    console.log(editedCompliancePages);
 
     compliance.content[0].id=editedCompliancePages.content[0].id;
     compliance.content[0].title=editedCompliancePages.content[0].title;
