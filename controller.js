@@ -111,11 +111,13 @@ function deleteItem(request, response) {
     }
 };
 
-// Muss geändert werden
 function editItem(request, response) {
-    var requestURL = request.url.split('/');
-    var dataType = eval(requestURL[1]);
-    var editId = request.params.id;
+    let requestURL = request.url.split('/');
+    let dataType = eval(requestURL[1]);
+    let editId = request.params.id;
+
+    let singleEditItem = dataType.content.find(dataType => dataType.id === editId);
+    let editIndex = dataType.content.findIndex(dataType => dataType.id === editId);
 
     if(editId == 'new') {
         let newItem;
@@ -126,28 +128,29 @@ function editItem(request, response) {
             response.status(200).end('OK');
         });
         response.send('Successfully created.');
-    } else if (editId == 'notnew') {
-        /*
-        var changedItem = {
-            id: editId,
-            name: request.body.name,
-            shortDescription: request.body.shortDescription,
-            longDescription: request.body.longDescription,
-            date: request.body.firstAppearance,
-            tags: request.body.tags,
-            images: request.body.images,
-            videos: request.body.videos,
-            websiteURLs: request.body.websiteURLs,
-            assets: request.body.assets,
-            artifactIDs: request.body.artifactIDs,
-            personIDs: request.body.personIDs,
-            eventsIDs: request.body.eventIDs,
-            published: request.body.published,
-            createdOn: request.body.createdOn,
-            lastChangeOn: today
+    } else if (singleEditItem) {
+        editedItem = request.body;
+
+        let editedData = [
+            ...dataType.content.slice(0, editIndex),
+            ...dataType.content.slice(editIndex + 1)
+        ];
+        editedData.splice(editIndex, 0, editedItem);
+
+        if (requestURL[1] == 'artifacts') {
+            allData.artifacts.content = editedData;
         };
-        dataType.content[editId] = changedItem;
-        */
+        if (requestURL[1] == 'persons') {
+            allData.persons.content = editedData;
+        };
+        if (requestURL[1] == 'events') {
+            allData.events.content = editedData;
+        };
+    
+         fs.writeFile( 'data/archivedata.json', JSON.stringify( allData ), function(err) {
+             response.status(200).end('OK');
+        });
+
         response.send('Successfully changed.');
     } else {
         response.send('Not a valid ' + dataType.name + '-ID.');
