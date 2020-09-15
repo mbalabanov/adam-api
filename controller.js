@@ -1,81 +1,351 @@
 const bp = require( 'body-parser' );
 const fs = require( 'fs' );
+const Mongo = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
-let allData = {};
+const uri = 'mongodb+srv://adamuser:letmein123nowpl33se@cluster0.xuhkf.mongodb.net/adamdb?retryWrites=true&w=majority';
+const db = 'adamdb';
+
+let allData = [];
 let featured = [];
+let artifacts = [];
+let persons = [];
+let events = [];
 let news = [];
-let compliance;
+let compliance = [];
 let instructiontext = ``;
 
 function instructions(request, response) {
     response.send(instructiontext);
 }
 
-function loadData() {
-
-    fs.readFile('data/archivedata.json', 'utf8', function(err, contents) {
-        allData = JSON.parse(contents);
-        artifacts = allData.artifacts;
-        persons = allData.persons;
-        events = allData.events;
-    });
-
-    fs.readFile('data/featured.json', 'utf8', function(err, contents) {
-        var tempData = JSON.parse(contents);
-        featured = tempData;
-    });
-
-    fs.readFile('data/newsdata.json', 'utf8', function(err, contents) {
-        var tempData = JSON.parse(contents);
-        news = tempData;
-    });
-
-    fs.readFile('data/compliance.json', 'utf8', function(err, contents) {
-        var tempData = JSON.parse(contents);
-        compliance = tempData;
-    });
-
+function loadInstructions() {
     fs.readFile('data/instructions.html', 'utf8', function(err, contents) {
         instructiontext = contents;
     });
-
 };
 
 function getAll(request, response) {
-    response.setHeader('Content-Type', 'application/json');
-    response.send(allData);
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            allData = [];
+
+            const database = client.db(db);
+            const artifactscollection = database.collection('artifacts');
+            const artifactsdata = await artifactscollection.find();
+
+            const eventscollection = database.collection('events');
+            const eventsdata = await eventscollection.find();
+
+            const personscollection = database.collection('persons');
+            const personsdata = await personscollection.find();
+
+            while(await artifactsdata.hasNext()) {
+                const artifact = await artifactsdata.next();
+                allData.push(artifact);
+            }
+
+            while(await eventsdata.hasNext()) {
+                const event = await eventsdata.next();
+                allData.push(event);
+            }
+
+            while(await personsdata.hasNext()) {
+                const person = await personsdata.next();
+                allData.push(person);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(allData);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
 };
 
-function getItems(request, response) {
-    var tempURL = request.url.split('/');
-    var requestURL = eval(tempURL[1]);
-    response.setHeader('Content-Type', 'application/json');
-    response.send(eval(requestURL));
+function getArtifacts(request, response) {
+
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            artifacts = [];
+
+            const database = client.db(db);
+            const artifactscollection = database.collection('artifacts');
+            const artifactsdata = await artifactscollection.find();
+
+            while(await artifactsdata.hasNext()) {
+                const artifact = await artifactsdata.next();
+                artifacts.push(artifact);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(artifacts);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
+
 };
 
-function getItem(request, response) {
-    var requestURL = request.url.split('/');
-    var dataType = eval(requestURL[1]);
-    var itemId = request.params.id;
-    var singleItem = dataType.content.find(dataType => dataType.id === itemId);
-    if(singleItem) {
-        response.setHeader('Content-Type', 'application/json');
-        response.send(singleItem);        
-    } else {
-        response.send(itemId + ' is not a valid ID for ' + requestURL[1] + '.');
-    }
+function getPersons(request, response) {
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            persons = [];
+
+            const database = client.db(db);
+            const personscollection = database.collection('persons');
+            const personsdata = await personscollection.find();
+
+            while(await personsdata.hasNext()) {
+                const person = await personsdata.next();
+                persons.push(person);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(persons);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
 };
 
-function getNewsItem(request, response) {
-    var itemId = request.params.id;
-    var newsItems = Object.values(news.content);
-    var singleItem = newsItems.find(newsItems => newsItems.id === itemId);
-    if(singleItem) {
-        response.setHeader('Content-Type', 'application/json');
-        response.send(singleItem);        
-    } else {
-        response.send(itemId + ' is not a valid ID for news.');
-    }
+function getEvents(request, response) {
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            events = [];
+
+            const database = client.db(db);
+            const eventscollection = database.collection('events');
+            const eventsdata = await eventscollection.find();
+
+            while(await eventsdata.hasNext()) {
+                const event = await eventsdata.next();
+                events.push(event);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(events);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
+};
+
+function getNews(request, response) {
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            news = [];
+
+            const database = client.db(db);
+            const newscollection = database.collection('newsdata');
+            const newsdata = await newscollection.find();
+
+            while(await newsdata.hasNext()) {
+                const newsitem = await newsdata.next();
+                news.push(newsitem);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(news);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
+};
+
+function getFeatured(request, response) {
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            featured = [];
+
+            const database = client.db(db);
+            const featuredcollection = database.collection('featured');
+            const featureddata = await featuredcollection.find();
+
+            while(await featureddata.hasNext()) {
+                const featureditem = await featureddata.next();
+                featured.push(featureditem);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(featured);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
+};
+
+function getCompliance(request, response) {
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+
+            compliance = [];
+
+            const database = client.db(db);
+            const compliancecollection = database.collection('compliance');
+            const compliancedata = await compliancecollection.find();
+
+            while(await compliancedata.hasNext()) {
+                const compliancepage = await compliancedata.next();
+                compliance.push(compliancepage);
+            }
+
+            response.setHeader('Content-Type', 'application/json');
+            response.send(compliance);
+      
+        } catch (err) {
+          console.log(err.stack);
+        }
+
+        await client.close();
+    })();
+};
+
+function getArtifact(request, response) {
+    var ObjectId = Mongo.ObjectId;
+    let findId = new ObjectId(request.params.id)
+    console.log(findId);
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+            const database = client.db(db);
+            const collection = database.collection('artifacts');
+            const artifact = await collection.findOne({"_id" : findId});
+            response.setHeader('Content-Type', 'application/json');
+            response.send(artifact);
+      
+        } catch (err) {
+            console.log(err.stack);
+        }
+        await client.close();
+    })();
+};
+
+function getPerson(request, response) {
+    var ObjectId = Mongo.ObjectId;
+    let findId = new ObjectId(request.params.id)
+    console.log(findId);
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+            const database = client.db(db);
+            const collection = database.collection('persons');
+            const person = await collection.findOne({"_id" : findId});
+            response.setHeader('Content-Type', 'application/json');
+            response.send(person);
+        } catch (err) {
+            console.log(err.stack);
+        }
+        await client.close();
+    })();
+};
+
+function getEvent(request, response) {
+    var ObjectId = Mongo.ObjectId;
+    let findId = new ObjectId(request.params.id)
+    console.log(findId);
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+            const database = client.db(db);
+            const collection = database.collection('events');
+            const event = await collection.findOne({"_id" : findId});
+            response.setHeader('Content-Type', 'application/json');
+            response.send(event);
+        } catch (err) {
+            console.log(err.stack);
+        }
+        await client.close();
+    })();
+};
+
+function getCompliancepage(request, response) {
+    let findId = request.params.id;
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+            const database = client.db(db);
+            const collection = database.collection('compliance');
+            const compliancepage = await collection.findOne({"category" : findId});
+            response.setHeader('Content-Type', 'application/json');
+            response.send(eval(compliancepage));
+        } catch (err) {
+            console.log(err.stack);
+        }
+        await client.close();
+    })();
+};
+
+function getNewsitem(request, response) {
+    let findId = request.params.id;
+    (async function() {
+        const client = new MongoClient(uri, { useUnifiedTopology: true});
+      
+        try {
+            await client.connect();
+            const database = client.db(db);
+            const collection = database.collection('newsdata');
+            const newspage = await collection.findOne({"uniquename" : findId});
+            response.setHeader('Content-Type', 'application/json');
+            response.send(eval(newspage));
+        } catch (err) {
+            console.log(err.stack);
+        }
+        await client.close();
+    })();
 };
 
 function deleteItem(request, response) {
@@ -261,15 +531,23 @@ function editCompliance(request, response) {
 };
 
 module.exports = {
-    loadData,
     instructions,
     getAll,
-    getItems,
-    getItem,
+    getArtifacts,
+    getPersons,
+    getEvents,
+    getNews,
+    getFeatured,
+    getCompliance,
+    getArtifact,
+    getPerson,
+    getEvent,
+    getCompliancepage,
+    getNewsitem,
     deleteItem,
     editItem,
     editFeatured,
     editNews,
-    getNewsItem,
-    editCompliance
+    editCompliance,
+    loadInstructions
 };

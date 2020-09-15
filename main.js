@@ -1,7 +1,7 @@
 const express = require( 'express' );
 const bp = require( 'body-parser' );
 const morgan = require('morgan');
-const { loadData, instructions, getAll, getItems, getItem, deleteItem, editItem, editFeatured, editNews, getNewsItem, editCompliance } = require('./controller');
+const { instructions, getAll, getArtifacts, getPersons, getEvents, getNews, getFeatured, getCompliance, getArtifact, getPerson, getEvent, getNewsitem, getCompliancepage, deleteItem, editItem, editFeatured, editNews, editCompliance, loadInstructions } = require('./controller');
 const app = express();
 var cors = require('cors');
 const port = process.env.PORT || 5003;
@@ -24,26 +24,50 @@ app.use(morgan('common', { immediate: true }));
 app.listen(port);
 console.log('Express started on port ' + port);
 
-loadData();
-
 app.get('/', function(request, response) {
+  loadInstructions();
   instructions(request, response);
 });
-
 app.get('/all', function(request, response) {
   getAll(request, response);
 });
-
-app.get(['/artifacts', '/artifacts/', '/persons', '/persons/', '/events', '/events/', '/featured', '/featured/', '/news/', '/news', '/compliance', '/compliance/'], function(request, response) {
-  getItems(request, response);
+app.get(['/artifacts', '/artifacts/'], function(request, response) {
+  getArtifacts(request, response);
+});
+app.get(['/persons', '/persons/'], function(request, response) {
+  getPersons(request, response);
+});
+app.get(['/events', '/events/',], function(request, response) {
+  getEvents(request, response);
+});
+app.get(['/featured', '/featured/'], function(request, response) {
+  getFeatured(request, response);
+});
+app.get(['/news/', '/news'], function(request, response) {
+  getNews(request, response);
+});
+app.get(['/compliance', '/compliance/'], function(request, response) {
+  getCompliance(request, response);
 });
 
-app.get(['/artifacts/:id', '/persons/:id', '/events/:id', '/featured/:id', '/compliance/:id'], function(request, response) {
-  getItem(request, response);
+app.get('/artifact/:id', function(request, response) {
+  getArtifact(request, response);
+});
+
+app.get('/person/:id', function(request, response) {
+  getPerson(request, response);
+});
+
+app.get('/event/:id', function(request, response) {
+  getEvent(request, response);
 });
 
 app.get('/newsitem/:id', function(request, response) {
-  getNewsItem(request, response);
+  getNewsitem(request, response);
+});
+
+app.get('/compliancepage/:id', function(request, response) {
+  getCompliancepage(request, response);
 });
 
 app.delete(['/artifacts/:id', '/persons/:id', '/events/:id'], function(request, response) {
