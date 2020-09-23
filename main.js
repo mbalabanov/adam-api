@@ -54,6 +54,7 @@ app.get(['/artifacts/:id','/persons/:id','/events/:id'], function(request, respo
 
 // Responds with a single news item based on its ID
 app.get('/news/:id', function(request, response) {
+  console.log('In der API')
   getNewsItem(request, response);
 });
 
