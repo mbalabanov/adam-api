@@ -214,7 +214,6 @@ function createItem(request, response) {
 };
 
 function editItem(request, response) {
-    console.log(request.body);
     (async function() {
         var requestURL = request.url.split('/');
         var ObjectId = Mongo.ObjectId;
@@ -224,7 +223,7 @@ function editItem(request, response) {
             await client.connect();
             const database = client.db(db);
             const collection = database.collection(requestURL[1]);
-            await collection.updateOne({"_id" : editId}, {$set:                
+            await collection.updateOne({"_id" : editId}, {$set:
                 {
                     "category": request.body.category,
                     'name': request.body.name,
@@ -244,6 +243,7 @@ function editItem(request, response) {
             });
             response.setHeader('Content-Type', 'application/json');
             response.send('Successfully edited!');
+
         } catch (err) {
             console.log(err.stack);
         }
